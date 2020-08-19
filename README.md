@@ -1,6 +1,8 @@
-# calculator
+# Flutter calculator
 
 A new Flutter project.
+
+Flutter calculator based on the book : Programming Flutter, native, cross-platform apps the easy way - Carmin Zaccagnino
 
 ## Getting Started
 
