@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:calculator/calculator.dart';
 
 void main() {
   runApp(MyApp());
@@ -29,6 +30,7 @@ class CalculatorHome extends StatefulWidget {
 
 class _CalculatorHomeState extends State<CalculatorHome> {
   String _str = "0";
+  var _calculation = Calculation();
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +41,19 @@ class _CalculatorHomeState extends State<CalculatorHome> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          CalculatorScreen(str: _str),
+          Expanded(
+            flex: 2,
+            child: Card(
+              color: Colors.lightGreen[50],
+              child: Padding(
+                padding: EdgeInsets.all(15.0),
+                child: Text(
+                  _str,
+                  textScaleFactor: 2.0,
+                ),
+              ),
+            ),
+          ),
           Expanded(
               flex: 1,
               child: Row(
@@ -48,14 +62,14 @@ class _CalculatorHomeState extends State<CalculatorHome> {
                   Expanded(
                       flex: 3,
                       child: FlatButton(
-                        onPressed: () {},
+                        onPressed: () {deleteAll();},
                         child: Text("C", style: TextStyle(color: Colors.white)),
                         color: Colors.black54,
                       )),
                   Expanded(
                       flex: 1,
                       child: FlatButton(
-                        onPressed: () {},
+                        onPressed: () {deleteOne();},
                         child:
                             Text("<-", style: TextStyle(color: Colors.white)),
                         color: Colors.black87,
@@ -221,41 +235,36 @@ class _CalculatorHomeState extends State<CalculatorHome> {
     );
   }
 
-  void add(String a) {}
+  void add(String a) {
+    setState(() {
+      _calculation.add(a);
+      _str = _calculation.getString();
+    });
+  }
 
-  void deleteAll() {}
+  void deleteAll() {
+    setState(() {
+      _calculation.deleteAll();
+      _str = _calculation.getString();
+    });
+    _calculation = new Calculation();
+  }
 
-  void deleteOne() {}
+  void deleteOne() {
+    setState(() {
+      _calculation.deleteOne();
+      _str = _calculation.getString();
+    });
+  }
 
-  void getResult() {}
-}
+  void getResult() {
+    setState(() {
+      _str = _calculation.getResult().toString();
+    });
 
-class CalculatorScreen extends StatelessWidget {
-  const CalculatorScreen({
-    Key key,
-    @required String str,
-  })  : _str = str,
-        super(key: key);
-
-  final String _str;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      flex: 2,
-      child: Card(
-        color: Colors.lightGreen[50],
-        child: Padding(
-          padding: EdgeInsets.all(15.0),
-          child: Text(
-            _str,
-            textScaleFactor: 2.0,
-          ),
-        ),
-      ),
-    );
   }
 }
+
 
 class ExpandedButton extends StatelessWidget {
   ExpandedButton({this.onPressed, this.child, this.color});
