@@ -259,7 +259,12 @@ class _CalculatorHomeState extends State<CalculatorHome> {
 
   void getResult() {
     setState(() {
-      _str = _calculation.getResult().toString();
+      try {
+        _str = _calculation.getResult().toString();
+      } on DivideByZeroException {
+        _str = "Division by 0 is illegal";
+        _calculation = new Calculation();
+      }
     });
 
   }

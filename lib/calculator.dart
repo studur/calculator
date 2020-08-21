@@ -51,6 +51,9 @@ class Calculation {
         a.removeAt(i);
         i--;
       } else if (a[i] == "%") {
+        if (double.parse(a[i+1]) == 0) {
+          throw DivideByZeroException();
+        }
         a[i - 1] = "${double.parse(a[i - 1]) / double.parse(a[i + 1])}";
         a.removeAt(i);
         a.removeAt(i);
@@ -86,4 +89,8 @@ class Calculation {
     });
     return expression;
   }
+}
+
+class DivideByZeroException implements Exception {
+
 }
